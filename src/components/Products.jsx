@@ -1,22 +1,28 @@
 // import './Products.css'
 import { AddToCartIcon } from './Icons.jsx'
 
-function Products ({ products }){
-    return(
+const Products = ({ products, setUser }) => {
+
+    const logOut = () => {
+        setUser([])
+    }
+    
+    return (
         <main>
+            <button onClick={logOut}>Log out</button>
             <ul>
-                {products.map(product =>(
+                {products.slice(0, 10).map(product => (
                     <li key={product.id}>
                         <img
                             src={product.thumbnail}
                             alt={product.title}
                         />
                         <div>
-                            <strong>{product.title}</strong>
+                            <strong>{product.title}</strong> - ${product.price}
                         </div>
                         <div>
                             <button>
-                                <AddToCartIcon/>
+                                <AddToCartIcon />
                             </button>
                         </div>
                     </li>
