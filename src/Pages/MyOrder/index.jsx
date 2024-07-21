@@ -2,7 +2,7 @@ import React from 'react'
 
 function MyOrder() {
   return (
-    <div>MyOrder</div>
+    <div className='bg-green-600'>MyOrder</div>
   )
 }
 

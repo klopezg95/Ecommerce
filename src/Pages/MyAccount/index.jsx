@@ -2,7 +2,7 @@ import React from 'react'
 
 function MyAcount() {
   return (
-    <div>MyAcount</div>
+    <div className='bg-blue-500'>MyAcount</div>
   )
 }
 
