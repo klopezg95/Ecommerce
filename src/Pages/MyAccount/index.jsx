@@ -1,8 +1,10 @@
-import React from 'react'
+import Layout from '../../Components/Layout'
 
 function MyAcount() {
   return (
-    <div className='bg-blue-500'>MyAcount</div>
+    <Layout>
+      MyAccount
+    </Layout>
   )
 }
 
