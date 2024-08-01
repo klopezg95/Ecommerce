@@ -1,0 +1,6 @@
+.product-detail{
+    width: 300px;
+    height: calc(100vh - 68px);
+    top: 68px;
+    /* los 68px es la altura del height del navbar*/
+}

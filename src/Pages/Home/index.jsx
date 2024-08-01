@@ -1,6 +1,7 @@
 import Layout from '../../Components/Layout'
 import Card from '../../Components/Card'
 import { useState, useEffect } from 'react'
+import ProductDetail from '../../Components/ProductDetail'
 import { data } from 'autoprefixer'
 
 function Home() {
@@ -28,7 +29,7 @@ function Home() {
                 })
             }
             </div>
-
+            <ProductDetail />
         </Layout>
     )
 }
