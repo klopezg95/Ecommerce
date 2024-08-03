@@ -1,0 +1,35 @@
+.checkout-side-menu{
+    width: 300px;
+    height: calc(100vh - 68px);
+    top: 68px;
+    /* los 68px es la altura del height del navbar*/
+}
+.scrollable-cards {
+	overflow: scroll;
+}
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  .scrollable-cards {
+    scrollbar-width: auto;
+    scrollbar-color: #141414 #ffffff;
+		/* overflow-x: hidden; */
+  }
+
+  /* Chrome, Edge, and Safari */
+  .scrollable-cards::-webkit-scrollbar {
+    width: 16px;
+		/* overflow-x: hidden; */
+  }
+
+  .scrollable-cards::-webkit-scrollbar-track {
+    background: #ffffff;
+		/* overflow-x: hidden; */
+  }
+
+  .scrollable-cards::-webkit-scrollbar-thumb {
+    background-color: #141414;
+    border-radius: 10px;
+    border: 3px solid #000000;
+		/* overflow-x: hidden; */
+  }
