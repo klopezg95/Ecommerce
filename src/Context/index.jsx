@@ -10,6 +10,9 @@ export const ShoppingCartProvider = ({ children }) => {
     const increment = () => {
         setCount(count + 1)
     }
+    const decrement =() =>{
+        setCount(count - 1)
+    }
     //Product Detail - Open/Close
     const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
     const OpenProductDetail = () => setIsProductDetailOpen(true)
@@ -29,11 +32,13 @@ export const ShoppingCartProvider = ({ children }) => {
 
 
 
+
     return (
         <ShoppingCartContext.Provider value={{
             count,
             setCount,
             increment,
+            decrement,
             OpenProductDetail,
             CloseProductDetail,
             isProductDetailOpen,
