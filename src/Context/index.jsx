@@ -12,6 +12,9 @@ export const ShoppingCartProvider = ({ children }) => {
         setCount(count + 1)
     }
     const decrement = () => {
+        if (count === 0) {
+            return;
+        }
         setCount(count - 1)
     }
     //Product Detail - Open/Close
@@ -30,6 +33,19 @@ export const ShoppingCartProvider = ({ children }) => {
     const [isCheckoutSideMenu, setIsCheckoutSideMenu] = useState(false)
     const OpenCheckoutSideMenu = () => setIsCheckoutSideMenu(true)
     const CloseCheckoutSideMenu = () => setIsCheckoutSideMenu(false)
+
+    //CheckOut side menu · QUANTITY
+    // const [quantity, setQuantity] = useState(1)
+
+    // const masCantidad = () => {
+    //     increment()
+    //     setQuantity(quantity + 1)
+    // }
+
+    // const menosCantidad = () => {
+    //     decrement()
+    //     setQuantity(quantity - 1)
+    // }
 
 
 
@@ -50,7 +66,7 @@ export const ShoppingCartProvider = ({ children }) => {
             // ShowProduct
             isCheckoutSideMenu,
             OpenCheckoutSideMenu,
-            CloseCheckoutSideMenu,
+            CloseCheckoutSideMenu
         }}>
             {children}
         </ShoppingCartContext.Provider>
