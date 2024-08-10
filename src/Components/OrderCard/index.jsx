@@ -1,40 +1,73 @@
-import { XMarkIcon } from '@heroicons/react/24/solid'
+import { TrashIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/solid'
+import { useContext, useState } from 'react'
+import { ShoppingCartContext } from '../../Context'
+import { totalPrice } from '../../utils'
 
 
 
 const OrderCard = (props) => {
 
-    const { id,title, image, price, handleDelete } = props
+    const { id, title, image, price, handleDelete } = props
+    const context = useContext(ShoppingCartContext)
+    const [quantity, setQuantity] = useState(1)
+
+    /** UN POSIBLE USEFFECT ??*/
+    const countQuantity = () => {
+        handleDelete(id)
+        context.setCount(context.count - quantity)
+    }
+
+    const masCantidad = () => {
+        setQuantity(quantity + 1)
+        context.increment()
+
+    }
+
+    const menosCantidad = () => {
+
+        if (quantity === 0) {
+            return;
+        }
+        setQuantity(quantity - 1)
+        context.decrement()
+
+    }
+    /**
+     * !!!!!!!!-----> ATENTION <------!!!!!!
+     * PROBLEMAS A RESOLVER:
+     * 1) la sumatoria por cantidad de veces que lleva el producto
+     * 2)al dar click en el producto que me borre la cantidad de productos de ese mismo que llevo en el carrito
+     */
 
 
     return (
-        <div className='border border-black my-6'>
+        <div className='border border-black my-6 rounded-md'>
             <div className='flex justify-end mt-1 mr-1'>
-            <XMarkIcon 
-            className='cursor-pointer size-6 text-black'
-            onClick={() => handleDelete(id)}
-            />
+                <TrashIcon
+                    className='cursor-pointer size-6 text-black'
+                    onClick={countQuantity}
+                />
             </div>
             <div className="flex justify-between items-center">
                 <div className='flex items-center gap-2'>
                     <figure className='w-20 h-20'>
                         <img className='w-full h-full m-1 rounded-lg object-cover' src={image} alt={title} />
                     </figure>
-                    <p className='text-sm font-light'>{title}</p>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <p className='text-sx font-medium'>${price}</p>
-
-                </div>
-             </div>
-            <div className=''>
-                <div className='flex'>
-                    <button>+</button>
-                    <p>0</p>
-                    <button>+</button>
+                    <p className='text-sm font-light text-center mx-1'>{title}</p>
                 </div>
             </div>
-        </div> 
+            <div className='flex justify-between px-2 mt-2'>
+                <div className='flex my-2 items-center'>
+                    <button className="bg-red-600 w-6 h-6 flex justify-center items-center" onClick={menosCantidad}><MinusIcon className='size-4 ' /></button>
+                    <p className='mx-2 text-lg'>{quantity === 0 ? handleDelete(id) : quantity}</p>
+                    <button className=" bg-green-600 w-6 h-6 flex justify-center items-center" onClick={masCantidad}><PlusIcon className='size-4' /></button>
+                </div>
+                <div className='flex items-center gap-2'>
+                    <p className='text-sx font-medium'>${price.toFixed(2)}</p>
+
+                </div>
+            </div>
+        </div>
     )
 }
 
