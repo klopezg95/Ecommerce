@@ -34,19 +34,6 @@ export const ShoppingCartProvider = ({ children }) => {
     const OpenCheckoutSideMenu = () => setIsCheckoutSideMenu(true)
     const CloseCheckoutSideMenu = () => setIsCheckoutSideMenu(false)
 
-    //CheckOut side menu · QUANTITY
-    // const [quantity, setQuantity] = useState(1)
-
-    // const masCantidad = () => {
-    //     increment()
-    //     setQuantity(quantity + 1)
-    // }
-
-    // const menosCantidad = () => {
-    //     decrement()
-    //     setQuantity(quantity - 1)
-    // }
-
 
 
 
@@ -63,7 +50,6 @@ export const ShoppingCartProvider = ({ children }) => {
             setProductToShow,
             cartProducts,
             setCartProducts,
-            // ShowProduct
             isCheckoutSideMenu,
             OpenCheckoutSideMenu,
             CloseCheckoutSideMenu

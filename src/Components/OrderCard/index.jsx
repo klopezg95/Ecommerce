@@ -1,5 +1,5 @@
 import { TrashIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/solid'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ShoppingCartContext } from '../../Context'
 import { totalPrice } from '../../utils'
 
@@ -10,8 +10,11 @@ const OrderCard = (props) => {
     const { id, title, image, price, handleDelete } = props
     const context = useContext(ShoppingCartContext)
     const [quantity, setQuantity] = useState(1)
+    const [precio, setPrecio] = useState(price)
 
-    /** UN POSIBLE USEFFECT ??*/
+    /** UN POSIBLE USEFFECT ??  para evitar correr la funcion antes de que se renderice el componente
+     * PD: mirar bien el flujo del proyecto para asi posiblemente solucionar el tema de la suma total universal en el checkoutsidemenu
+    */
     const countQuantity = () => {
         handleDelete(id)
         context.setCount(context.count - quantity)
@@ -20,6 +23,7 @@ const OrderCard = (props) => {
     const masCantidad = () => {
         setQuantity(quantity + 1)
         context.increment()
+        setPrecio(precio + price)
 
     }
 
@@ -30,8 +34,11 @@ const OrderCard = (props) => {
         }
         setQuantity(quantity - 1)
         context.decrement()
+        setPrecio(precio - price)
 
     }
+
+
     /**
      * !!!!!!!!-----> ATENTION <------!!!!!!
      * PROBLEMAS A RESOLVER:
@@ -63,7 +70,7 @@ const OrderCard = (props) => {
                     <button className=" bg-green-600 w-6 h-6 flex justify-center items-center" onClick={masCantidad}><PlusIcon className='size-4' /></button>
                 </div>
                 <div className='flex items-center gap-2'>
-                    <p className='text-sx font-medium'>${price.toFixed(2)}</p>
+                    <p className='text-sx font-medium'>${precio.toFixed(2)}</p>
 
                 </div>
             </div>

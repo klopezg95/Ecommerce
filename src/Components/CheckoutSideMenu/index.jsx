@@ -8,13 +8,14 @@ import './styles.css'
 function CheckoutSideMenu() {
 
   const context = useContext(ShoppingCartContext)
-  // console.log('CART:', context.cartProducts)
+
 
   const handleDelete = (id) => {
     const filteredProducts = context.cartProducts.filter(product => product.id != id)
     context.setCartProducts(filteredProducts)
 
   }
+
 
   return (
     <aside className={`${context.isCheckoutSideMenu ? 'flex' : 'hidden'} checkout-side-menu scrollable-cards flex-col fixed right-0 border border-black rounded-lg bg-white`}>
