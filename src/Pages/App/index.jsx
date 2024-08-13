@@ -15,6 +15,7 @@ const AppRoutes = () => {
   let routes = useRoutes([
     { path: '/', element: <Home /> },
     { path: '/my-orders', element: <MyOrders /> },
+    { path: '/my-orders/last', element: <MyOrder /> },
     { path: '/my-account', element: <MyAccount /> },
     { path: '/order', element: <MyOrder /> },
     { path: '/Sign-in', element: <SignIn /> },
@@ -29,7 +30,7 @@ const App = () => {
       <BrowserRouter>
         <AppRoutes />
         <Navbar />
-        <CheckoutSideMenu/>
+        <CheckoutSideMenu />
       </BrowserRouter>
     </ShoppingCartProvider>
   )

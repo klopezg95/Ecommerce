@@ -11,10 +11,15 @@ const OrderCard = (props) => {
     const context = useContext(ShoppingCartContext)
     const [quantity, setQuantity] = useState(1)
     const [precio, setPrecio] = useState(price)
+    // let renderTrashIcon
+    // if (handleDelete) {
+    //     renderTrashIcon = <TrashIcon className='cursor-pointer size-6 text-black' onClick={() => countQuantity} />
+    // }
 
     /** UN POSIBLE USEFFECT ??  para evitar correr la funcion antes de que se renderice el componente
      * PD: mirar bien el flujo del proyecto para asi posiblemente solucionar el tema de la suma total universal en el checkoutsidemenu
     */
+
     const countQuantity = () => {
         handleDelete(id)
         context.setCount(context.count - quantity)
@@ -39,16 +44,16 @@ const OrderCard = (props) => {
     }
 
 
+
     /**
      * !!!!!!!!-----> ATENTION <------!!!!!!
      * PROBLEMAS A RESOLVER:
      * 1) la sumatoria por cantidad de veces que lleva el producto
      * 2)al dar click en el producto que me borre la cantidad de productos de ese mismo que llevo en el carrito
      */
-
-
     return (
         <div className='border border-black my-6 rounded-md'>
+            {/* {renderTrashIcon} */}
             <div className='flex justify-end mt-1 mr-1'>
                 <TrashIcon
                     className='cursor-pointer size-6 text-black'
