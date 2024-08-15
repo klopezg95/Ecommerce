@@ -6,19 +6,24 @@ import { Link } from 'react-router-dom'
 import OrderCard from '../../Components/OrderCard'
 
 function MyOrder() {
+
   const context = useContext(ShoppingCartContext)
+  const currentPath = window.location.pathname
+  let index = currentPath.substring(currentPath.lastIndexOf('/') + 1)
+  if (index === 'last') index = context.order?.length - 1
+
   return (
     <Layout>
       <div className='flex w-80 items-center justify-center relative mb-6'>
         <Link to='/my-orders' className='absolute left-0'>
           <ChevronLeftIcon className='h-6 w-6 text-black cursor-pointer' />
         </Link>
-        <h1>MyOrder</h1>
+        <h1>My Order</h1>
       </div>
       <div className="grid grid-cols-4 gap-10 w-full max-w-screen-lg">
         {
           context.order && context.order.length > 0 ?
-            context.order.slice(-1)[0].products.map(product => (
+            context.order?.[index]?.products.map(product => (
               <OrderCard
                 key={product.id}
                 id={product.id}
