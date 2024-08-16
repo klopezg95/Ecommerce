@@ -5,6 +5,7 @@ import { ShoppingCartContext } from "../../Context"
 
 function Card(data) {
 
+
   const context = useContext(ShoppingCartContext);
 
   const ShowProduct = (ProductDetail) => {
@@ -12,46 +13,46 @@ function Card(data) {
     context.setProductToShow(ProductDetail);
   }
 
-  const addProductsToCart = (event, ProductData) => {
-    context.setCartProducts([...context.cartProducts, ProductData])
-    context.increment();
+  const addProductsToCart = (event) => {
+    // context.setCartProducts([...context.cartProducts, ProductData])
+    // context.increment();
     context.OpenCheckoutSideMenu();
     event.stopPropagation();
+    context.addToCart(data.data);
     context.CloseProductDetail();
-
   }
 
   const RenderIcon = (id) => {
 
     const isInCart = context.cartProducts.filter(product => product.id === id).length > 0
 
-    if(isInCart){
+    if (isInCart) {
       return (
-        
+
         <button
           className="absolute top-0 right-0 flex justify-center items-center bg-green-500 size-6 text-white rounded-full m-2 p-1 border border-green-700">
           <CheckIcon />
         </button>
       )
 
-      
 
-    }else{
+
+    } else {
       return (
         <button
-        className="absolute top-0 right-0 flex justify-center items-center bg-white size-6 text-black rounded-full m-2 p-1"
-        onClick={(event) => {
-          addProductsToCart(event, data.data);
-        }}
-      >
-        <PlusIcon />
+          className="absolute top-0 right-0 flex justify-center items-center bg-white size-6 text-black rounded-full m-2 p-1"
+          onClick={(event) => {
+            addProductsToCart(event, data.data);
+          }}
+        >
+          <PlusIcon />
 
         </button>
       )
     }
 
   }
-  
+
 
   return (
     <div className="bg-white cursor-pointer w-56 h-60 rounded-lg" onClick={() => ShowProduct(data.data)}>

@@ -7,57 +7,36 @@ import { totalPrice } from '../../utils'
 
 const OrderCard = (props) => {
 
-    const { id, title, image, price, handleDelete } = props
+    const { id, title, image, price, numProduct } = props
     const context = useContext(ShoppingCartContext)
-    const [quantity, setQuantity] = useState(1)
-    const [precio, setPrecio] = useState(price)
+
     // let renderTrashIcon
     // if (handleDelete) {
     //     renderTrashIcon = <TrashIcon className='cursor-pointer size-6 text-black' onClick={() => countQuantity} />
     // }
 
-    /** UN POSIBLE USEFFECT ??  para evitar correr la funcion antes de que se renderice el componente
-     * PD: mirar bien el flujo del proyecto para asi posiblemente solucionar el tema de la suma total universal en el checkoutsidemenu
-    */
-
-    const countQuantity = () => {
-        handleDelete(id)
-        context.setCount(context.count - quantity)
+    const getQuantity = () => {
+        const product = context.cartProducts.find(product => product.id === id);
+        return product.quantity;
     }
 
-    const masCantidad = () => {
-        setQuantity(quantity + 1)
-        context.increment()
-        setPrecio(precio + price)
-
+    const addProductToCart = () => {
+        const product = context.cartProducts.find(product => product.id === id);
+        context.addToCart(product);
     }
 
-    const menosCantidad = () => {
-
-        if (quantity === 0) {
-            return;
-        }
-        setQuantity(quantity - 1)
-        context.decrement()
-        setPrecio(precio - price)
-
+    const pricePerProduct = () => {
+        const product = context.cartProducts.find(product => product.id === id);
+        return product.price * product.quantity;
     }
 
-
-
-    /**
-     * !!!!!!!!-----> ATENTION <------!!!!!!
-     * PROBLEMAS A RESOLVER:
-     * 1) la sumatoria por cantidad de veces que lleva el producto
-     * 2)al dar click en el producto que me borre la cantidad de productos de ese mismo que llevo en el carrito
-     */
     return (
         <div className='border border-black my-6 rounded-md'>
             {/* {renderTrashIcon} */}
             <div className='flex justify-end mt-1 mr-1'>
                 <TrashIcon
                     className='cursor-pointer size-6 text-black'
-                    onClick={countQuantity}
+                    onClick={() => context.deleteProductFromCart(id, 1)}
                 />
             </div>
             <div className="flex justify-between items-center">
@@ -70,12 +49,12 @@ const OrderCard = (props) => {
             </div>
             <div className='flex justify-between px-2 mt-2'>
                 <div className='flex my-2 items-center'>
-                    <button className="bg-red-600 w-6 h-6 flex justify-center items-center" onClick={menosCantidad}><MinusIcon className='size-4 ' /></button>
-                    <p className='mx-2 text-lg'>{quantity === 0 ? handleDelete(id) : quantity}</p>
-                    <button className=" bg-green-600 w-6 h-6 flex justify-center items-center" onClick={masCantidad}><PlusIcon className='size-4' /></button>
+                    <button className="bg-red-600 w-6 h-6 flex justify-center items-center" onClick={() => context.deleteProductFromCart(id, 1)}><MinusIcon className='size-4 ' /></button>
+                    <p className='mx-2 text-lg'>{getQuantity()}</p>
+                    <button className=" bg-green-600 w-6 h-6 flex justify-center items-center" onClick={addProductToCart}><PlusIcon className='size-4' /></button>
                 </div>
                 <div className='flex items-center gap-2'>
-                    <p className='text-sx font-medium'>${precio.toFixed(2)}</p>
+                    <p className='text-sx font-medium'>${pricePerProduct()}</p>
 
                 </div>
             </div>

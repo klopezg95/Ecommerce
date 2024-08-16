@@ -4,5 +4,5 @@
  * @returns {number} Total Price checkOut
  */
 export const totalPrice = (products) => {
-    return products.reduce((sum, product) => sum + product.price, 0)
+    return products.reduce((acc, product) => acc + product.price * product.quantity, 0)
 }

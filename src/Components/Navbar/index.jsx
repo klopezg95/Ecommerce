@@ -5,7 +5,7 @@ import { ShoppingCartContext } from '../../Context'
 
 function Navbar() {
 
-    const { count } = useContext(ShoppingCartContext)
+    const { productCounter } = useContext(ShoppingCartContext)
     const activeStyle = 'underline underline-offset-4'
 
     return (
@@ -102,7 +102,7 @@ function Navbar() {
                 <li className='size-7 text-black cursor-pointer flex items-center'>
                     <ShoppingBagIcon />
                     <div>
-                        {count}
+                        {productCounter}
                     </div>
                 </li>
             </ul>

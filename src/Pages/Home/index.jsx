@@ -18,7 +18,6 @@ function Home() {
     }, [])
 
 
-
     return (
         <Layout>
             Home

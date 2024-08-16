@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const ShoppingCartContext = createContext();
 
@@ -37,6 +37,43 @@ export const ShoppingCartProvider = ({ children }) => {
     //Shopping Cart · Order
     const [order, setOrder] = useState([])
 
+    //-----------------PRUEBAS
+    const [productCounter, setProductCounter] = useState(0);
+
+    const addToCart = (product) => {
+        const productAdded = cartProducts.some(item => item.id === product.id);
+        if (!productAdded) {
+            setCartProducts([...cartProducts, {
+                ...product,
+                quantity: 1,
+            }].sort((a, b) => a.title.localeCompare(b.title)));
+        } else {
+            const filteredProducts = cartProducts.filter(item => item.id !== product.id);
+            setCartProducts([...filteredProducts, {
+                ...product,
+                quantity: product.quantity + 1,
+            }].sort((a, b) => a.title.localeCompare(b.title)));
+        }
+    }
+    const deleteProductFromCart = (id, quantity) => {
+        if (quantity === -1) {
+            const filteredProducts = cartProducts.filter(product => product.id !== id);
+            setCartProducts(filteredProducts);
+        } else {
+            const filteredProducts = cartProducts.filter(product => product.id !== id);
+            const product = cartProducts.find(product => product.id === id);
+            if (product.quantity === 1) return setCartProducts(filteredProducts);
+            setCartProducts([...filteredProducts, {
+                ...product,
+                quantity: product.quantity - quantity,
+            }].sort((a, b) => a.title.localeCompare(b.title)));
+        }
+    }
+    useEffect(() => {
+        const counter = cartProducts.reduce((acc, product) => acc + product.quantity, 0);
+        setProductCounter(counter);
+    }, [cartProducts]);
+
 
 
     return (
@@ -56,7 +93,10 @@ export const ShoppingCartProvider = ({ children }) => {
             OpenCheckoutSideMenu,
             CloseCheckoutSideMenu,
             order,
-            setOrder
+            setOrder,
+            addToCart,
+            deleteProductFromCart,
+            productCounter
         }}>
             {children}
         </ShoppingCartContext.Provider>
