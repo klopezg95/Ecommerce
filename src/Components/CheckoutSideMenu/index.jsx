@@ -11,28 +11,25 @@ function CheckoutSideMenu() {
   const context = useContext(ShoppingCartContext)
 
 
-  const handleDelete = (id) => {
-    const filteredProducts = context.cartProducts.filter(product => product.id != id)
-    context.setCartProducts(filteredProducts)
+  // const handleDelete = (id) => {
+  //   const filteredProducts = context.cartProducts.filter(product => product.id != id)
+  //   context.setCartProducts(filteredProducts)
 
-  }
+  // }
 
   const handleCheckout = () => {
-    const date = new Date();
-    const orderToAdd = {
-      Date: date.toLocaleDateString(),
-      products: context.cartProducts,
-      totalProducts: context.cartProducts.length,
-      totalPrice: totalPrice(context.cartProducts)
+    const newOrder = {
+      id: context.order.length,
+      cartProducts: context.cartProducts,
+      totalPrice: totalPrice(context.cartProducts),
+      date: new Date().toLocaleDateString(),
     }
-    context.setOrder([...context.order, orderToAdd])
-    context.setCartProducts([])
-    context.setCount(0)
-    context.CloseCheckoutSideMenu()
+    context.setOrder([...context.order, newOrder]);
+    context.emptyCart();
+    context.CloseCheckoutSideMenu();
   }
 
-  console.log(context.order)
-  // console.log(context.cartProducts[3])
+
   return (
     <aside className={`${context.isCheckoutSideMenu ? 'flex' : 'hidden'} checkout-side-menu scrollable-cards flex-col fixed right-0 border border-black rounded-lg bg-white`}>
       <div className='flex justify-between items-center p-6'>
@@ -44,7 +41,7 @@ function CheckoutSideMenu() {
       <div className='mx-6 flex-1'>
         {
           context.cartProducts.map((product) => {
-            return <OrderCard key={product.id} id={product.id} title={product.title} image={product.image} price={product.price} handleDelete={handleDelete} />
+            return <OrderCard key={product.id} id={product.id} title={product.title} image={product.image} price={product.price} state="checkoutSideMenu" />
           })
         }
         <div className={`${context.cartProducts.length <= 0 ? 'view' : 'hidden'}`}>

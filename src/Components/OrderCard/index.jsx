@@ -7,7 +7,7 @@ import { totalPrice } from '../../utils'
 
 const OrderCard = (props) => {
 
-    const { id, title, image, price, numProduct } = props
+    const { id, title, image, numProduct, state, price } = props
     const context = useContext(ShoppingCartContext)
 
     // let renderTrashIcon
@@ -31,35 +31,44 @@ const OrderCard = (props) => {
     }
 
     return (
-        <div className='border border-black my-6 rounded-md'>
-            {/* {renderTrashIcon} */}
-            <div className='flex justify-end mt-1 mr-1'>
-                <TrashIcon
-                    className='cursor-pointer size-6 text-black'
-                    onClick={() => context.deleteProductFromCart(id, 1)}
-                />
-            </div>
-            <div className="flex justify-between items-center">
-                <div className='flex items-center gap-2'>
-                    <figure className='w-20 h-20'>
-                        <img className='w-full h-full m-1 rounded-lg object-cover' src={image} alt={title} />
+        <>
+            <div className="flex justify-between items-center mb-3 relative border border-black p-2 rounded-lg relative">
+                <div className="flex items-center gap-2">
+                    <figure className="w-16 h-16">
+                        <img src={image} alt={title} className="w-full h-full rounded-lg object-cover" />
                     </figure>
-                    <p className='text-sm font-light text-center mx-1'>{title}</p>
+                    <div className="flex items-center mx-1">
+                        <p className="font-medium text-sm">{numProduct}</p>
+                    </div>
+                    <div className="flex flex-col items-start gap-1">
+                        <p className="font-light text-sm">{title}</p>
+                        {state === "checkoutSideMenu" ? (
+                            <div className="flex justify-between items-center w-[80px]">
+                                <button
+                                    className="flex justify-center items-center w-5 h-5 bg-red-400 rounded-md"
+                                    onClick={() => context.deleteProductFromCart(id, 1)}
+                                >-</button>
+                                <p>{getQuantity()}</p>
+                                <button
+                                    className="flex justify-center items-center w-5 h-5 bg-green-400 rounded-md"
+                                    onClick={addProductToCart}
+                                >+</button>
+                            </div>)
+                            : null
+                        }
+                    </div>
+                </div>
+                <div className="">
+                    <p className="font-bold text-lg mt-12">${(state === "order" ? price : pricePerProduct().toFixed(2))}</p>
+                    {state === "checkoutSideMenu" ? (
+                        <button className="absolute top-0 right-0" onClick={() => context.deleteProductFromCart(id, -1)}>
+                            <TrashIcon className="h-6 w-6 text-black" />
+                        </button>
+                    ) : null}
                 </div>
             </div>
-            <div className='flex justify-between px-2 mt-2'>
-                <div className='flex my-2 items-center'>
-                    <button className="bg-red-600 w-6 h-6 flex justify-center items-center" onClick={() => context.deleteProductFromCart(id, 1)}><MinusIcon className='size-4 ' /></button>
-                    <p className='mx-2 text-lg'>{getQuantity()}</p>
-                    <button className=" bg-green-600 w-6 h-6 flex justify-center items-center" onClick={addProductToCart}><PlusIcon className='size-4' /></button>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <p className='text-sx font-medium'>${pricePerProduct()}</p>
-
-                </div>
-            </div>
-        </div>
-    )
+        </>
+    );
 }
 
 export default OrderCard

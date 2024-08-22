@@ -37,7 +37,7 @@ export const ShoppingCartProvider = ({ children }) => {
     //Shopping Cart · Order
     const [order, setOrder] = useState([])
 
-    //-----------------PRUEBAS
+    //Add quantities to products · MyOrder
     const [productCounter, setProductCounter] = useState(0);
 
     const addToCart = (product) => {
@@ -55,6 +55,11 @@ export const ShoppingCartProvider = ({ children }) => {
             }].sort((a, b) => a.title.localeCompare(b.title)));
         }
     }
+    /**
+ * @param {Number} id : Product ID 
+ * @param {Number} quantity : Quantity to delete (if -1, delete all)
+ * @returns : void
+ */
     const deleteProductFromCart = (id, quantity) => {
         if (quantity === -1) {
             const filteredProducts = cartProducts.filter(product => product.id !== id);
@@ -69,6 +74,7 @@ export const ShoppingCartProvider = ({ children }) => {
             }].sort((a, b) => a.title.localeCompare(b.title)));
         }
     }
+    const emptyCart = () => setCartProducts([]);
     useEffect(() => {
         const counter = cartProducts.reduce((acc, product) => acc + product.quantity, 0);
         setProductCounter(counter);
@@ -96,7 +102,8 @@ export const ShoppingCartProvider = ({ children }) => {
             setOrder,
             addToCart,
             deleteProductFromCart,
-            productCounter
+            productCounter,
+            emptyCart
         }}>
             {children}
         </ShoppingCartContext.Provider>

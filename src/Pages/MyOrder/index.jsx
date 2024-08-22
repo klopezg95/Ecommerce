@@ -12,6 +12,12 @@ function MyOrder() {
   let index = currentPath.substring(currentPath.lastIndexOf('/') + 1)
   if (index === 'last') index = context.order?.length - 1
 
+
+  console.log('CARRITO', context.cartProducts)
+  console.log('Order:', context.order);
+  console.log('Index:', index);
+  console.log('Selected Order:', context.order?.[index]);
+  console.log('Products:', context.order?.[index]?.cartProducts);
   return (
     <Layout>
       <div className='flex w-80 items-center justify-center relative mb-6'>
@@ -22,8 +28,8 @@ function MyOrder() {
       </div>
       <div className="grid grid-cols-4 gap-10 w-full max-w-screen-lg">
         {
-          context.order && context.order.length > 0 ?
-            context.order?.[index]?.products.map(product => (
+          context.order?.[index]?.cartProducts?.length > 0 ? (
+            context.order[index].cartProducts.map(product => (
               <OrderCard
                 key={product.id}
                 id={product.id}
@@ -31,10 +37,12 @@ function MyOrder() {
                 image={product.image}
                 price={product.price}
                 numProduct={product.quantity}
+                state="order"
               />
-
             ))
-            : <p>No hay productos en la orden.</p>
+          ) : (
+            <p>No hay productos en la orden.</p>
+          )
         }
       </div>
     </Layout>

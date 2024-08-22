@@ -14,8 +14,6 @@ function Card(data) {
   }
 
   const addProductsToCart = (event) => {
-    // context.setCartProducts([...context.cartProducts, ProductData])
-    // context.increment();
     context.OpenCheckoutSideMenu();
     event.stopPropagation();
     context.addToCart(data.data);
