@@ -4,7 +4,29 @@ export const ShoppingCartContext = createContext();
 
 export const ShoppingCartProvider = ({ children }) => {
 
-    //counter Shoppingcart - Quantity
+    //Get Products
+    const [items, setItems] = useState(null)
+    const [filteredItems, setFilteredItems] = useState(null)
+
+    //Get Products by title
+    const [searchByTitle, setSearchByTitle] = useState(null)
+    useEffect(() => {
+        fetch('https://fakestoreapi.com/products')
+            .then(res => res.json())
+            .then(data => setItems(data))
+    }, [])
+    console.log(items[1].title)
+
+    const filteredItemsByTitle = (items, searchByTitle) => {
+        return items?.filter(item => item.title.toLowerCase().includes(searchByTitle.toLowerCase()))
+    }
+
+    useEffect(() => {
+        if (searchByTitle) setFilteredItems(filteredItemsByTitle(items, searchByTitle))
+    }, [items, searchByTitle])
+
+
+    //Counter Shoppingcart - Quantity
     const [count, setCount] = useState(0)
 
 
@@ -84,6 +106,8 @@ export const ShoppingCartProvider = ({ children }) => {
 
     return (
         <ShoppingCartContext.Provider value={{
+            items,
+            setItems,
             count,
             setCount,
             increment,
@@ -103,7 +127,10 @@ export const ShoppingCartProvider = ({ children }) => {
             addToCart,
             deleteProductFromCart,
             productCounter,
-            emptyCart
+            emptyCart,
+            searchByTitle,
+            setSearchByTitle,
+            filteredItems
         }}>
             {children}
         </ShoppingCartContext.Provider>
