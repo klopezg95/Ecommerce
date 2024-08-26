@@ -4,28 +4,56 @@ export const ShoppingCartContext = createContext();
 
 export const ShoppingCartProvider = ({ children }) => {
 
-    //Get Products
-    const [items, setItems] = useState(null)
-    const [filteredItems, setFilteredItems] = useState(null)
 
-    //Get Products by title
-    const [searchByTitle, setSearchByTitle] = useState(null)
+    //GETTING PRODUCTS API
     useEffect(() => {
         fetch('https://fakestoreapi.com/products')
             .then(res => res.json())
             .then(data => setItems(data))
     }, [])
-    console.log(items[1].title)
 
+    //Get Products
+    const [items, setItems] = useState(null)
+    const [filteredItems, setFilteredItems] = useState(null)
+    // const [searchedItem, setSearchedItem] = useState(null);
+
+    //Get Products by title
+    const [searchByTitle, setSearchByTitle] = useState(null)
     const filteredItemsByTitle = (items, searchByTitle) => {
         return items?.filter(item => item.title.toLowerCase().includes(searchByTitle.toLowerCase()))
     }
 
+    //Get Products by category
+    const [searchByCategory, setSearchByCategory] = useState(null)
+
+    const filteredItemsByCategory = (items, searchByCategory) => {
+        return items?.filter(item => item.category.toLowerCase().includes(searchByCategory.toLowerCase()))
+
+    }
+
+    // FILTER TITLE AND CATEGORY · TRACKER
+    const filterBy = (searchType) => {
+        if (searchType === 'BY_TITLE') {
+            return filteredItemsByTitle(items, searchByTitle)
+        }
+        if (searchType === 'BY_CATEGORY') {
+            return filteredItemsByCategory(items, searchByCategory)
+        }
+        if (searchType === 'TITLE_AND_CATEGORY') {
+            return filteredItemsByCategory(items, searchByCategory).filter(item => item.title.toLowerCase().includes(searchByTitle.toLowerCase()))
+        }
+        if (!searchType) {
+            return items
+        }
+    }
     useEffect(() => {
-        if (searchByTitle) setFilteredItems(filteredItemsByTitle(items, searchByTitle))
-    }, [items, searchByTitle])
 
+        if (!searchByTitle && !searchByCategory) setFilteredItems(filterBy(null, items, searchByTitle, searchByCategory)) // BOTH FLASE
+        if (searchByTitle && searchByCategory) setFilteredItems(filterBy('BY-TITLE_AND_CATEGORY', items, searchByTitle, searchByCategory)) //BOTH TRUE
+        if (searchByTitle && !searchByCategory) setFilteredItems(filterBy('BY_TITLE', items, searchByTitle, searchByCategory)) //TRUE AND FALSE
+        if (searchByCategory && !searchByTitle) setFilteredItems(filterBy('BY_CATEGORY', items, searchByTitle, searchByCategory))//FALSE AND TRUE
 
+    }, [items, searchByTitle, searchByCategory])
     //Counter Shoppingcart - Quantity
     const [count, setCount] = useState(0)
 
@@ -130,7 +158,9 @@ export const ShoppingCartProvider = ({ children }) => {
             emptyCart,
             searchByTitle,
             setSearchByTitle,
-            filteredItems
+            filteredItems,
+            searchByCategory,
+            setSearchByCategory
         }}>
             {children}
         </ShoppingCartContext.Provider>

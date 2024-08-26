@@ -1,5 +1,5 @@
 import { ChevronRightIcon, ShoppingBagIcon } from '@heroicons/react/24/solid'
-import { useContext, useEffect, useState } from 'react'
+
 
 const OrdersCard = (props) => {
 

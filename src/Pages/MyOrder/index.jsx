@@ -13,11 +13,11 @@ function MyOrder() {
   if (index === 'last') index = context.order?.length - 1
 
 
-  console.log('CARRITO', context.cartProducts)
-  console.log('Order:', context.order);
-  console.log('Index:', index);
-  console.log('Selected Order:', context.order?.[index]);
-  console.log('Products:', context.order?.[index]?.cartProducts);
+  // console.log('CARRITO', context.cartProducts)
+  // console.log('Order:', context.order);
+  // console.log('Index:', index);
+  // console.log('Selected Order:', context.order?.[index]);
+  // console.log('Products:', context.order?.[index]?.cartProducts);
   return (
     <Layout>
       <div className='flex w-80 items-center justify-center relative mb-6'>
